@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>jqPaginator</title>
+    <link type="text/css" rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.4/css/bootstrap.min.css"/>
+</head>
+<body style="padding:10px;">
+    <div class="lists-box"></div>
+    <div >
+        <ul class="pagination pull-left">
+            <li>
+                <a href="javascript:;">
+                    <span class="text-info">共 <b>116</b> 条</span>
+                </a>
+            </li>
+        </ul>
+        <ul id="pagination-box" class="pagination pull-right"></ul>
+    </div>
+
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/jqPaginator.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var getParams = '["status=10","type_id=2","time_start=2019-05-05","time_end=2019-05-25","content=001"]';
+        var status = !getParams.status ? '' : getParams.status;
+        var type_id = !getParams.type_id ? '' : getParams.type_id;
+        var time_start = !getParams.time_start ? '' : getParams.time_start;
+        var time_end = !getParams.time_end ? '' : getParams.time_end;
+        var content = !getParams.content ? '' : getParams.content;
+        var sort = "time";
+        var sortType = "desc";
+        var totalCounts = 116;
+
+        $('#pagination-box').jqPaginator({
+            totalCounts: totalCounts,
+            pageSize:10,
+            visiblePages: 8,
+            currentPage: 1,
+            onPageChange: function (num) {
+                getParams.page_num = num;
+                $(".lists-box").load('/leave/record-lists?status=' + status
+                    + '&type_id=' + type_id
+                    + '&time_start=' + time_start + '&time_end=' + time_end
+                    + '&content=' + content
+                    + '&sort=' + sort + '&sortType=' + sortType
+                    + "&page_num=" + num);
+            }
+        });
+    });
+</script>
+</body>
+</html>
